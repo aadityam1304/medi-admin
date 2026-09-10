@@ -8,6 +8,7 @@ import {
 } from "react-icons/fi";
 import classes from "./Sidebar.module.css";
 import NavItem from "./NavItem";
+import { useState } from "react";
 
 const navItems = [
   {
@@ -43,6 +44,11 @@ const navItems = [
 ];
 
 export default function Sidebar() {
+  const [activeItemId, setActiveItemId] = useState(1);
+
+  function handleSelect(id) {
+    setActiveItemId(id);
+  }
   return (
     <aside className={classes.sidebar}>
       <div className={classes.logo}>
@@ -54,7 +60,14 @@ export default function Sidebar() {
       <nav className={classes.nav}>
         <ul>
           {navItems.map((item) => (
-            <NavItem key={item.id} icon={item.icon} label={item.label} />
+            <NavItem
+              key={item.id}
+              icon={item.icon}
+              label={item.label}
+              id={item.id}
+              onSelect={handleSelect}
+              isActive={item.id === activeItemId}
+            />
           ))}
         </ul>
       </nav>

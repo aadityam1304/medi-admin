@@ -9,7 +9,6 @@ function App() {
 
       <main className={classes.main}>
         <Header />
-
         <h1>Dashboard</h1>
       </main>
     </div>
