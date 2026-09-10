@@ -1,0 +1,35 @@
+.navItem {
+  display: flex;
+  align-items: center;
+
+  gap: 1.2rem;
+  width: 100%;
+
+  padding: 1.2rem;
+  margin-bottom: 0.6rem;
+
+  border-radius: var(--radius-md);
+
+  color: var(--color-text-light);
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  cursor: pointer;
+}
+
+.navItem:hover {
+  background-color: #f3f4f6;
+  color: var(--color-text);
+}
+
+.navItem svg {
+  width: 1.9rem;
+  height: 1.9rem;
+}
+
+.navItem span {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
