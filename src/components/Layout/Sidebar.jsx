@@ -2,7 +2,6 @@ import {
   FiHome,
   FiPackage,
   FiShoppingCart,
-  FiBarChart2,
   FiZap,
   FiSettings,
 } from "react-icons/fi";
@@ -27,16 +26,11 @@ const navItems = [
   },
   {
     id: 4,
-    icon: <FiBarChart2 />,
-    label: "Analytics",
-  },
-  {
-    id: 5,
     icon: <FiZap />,
     label: "AI Insights",
   },
   {
-    id: 6,
+    id: 5,
     icon: <FiSettings />,
     label: "Settings",
   },
