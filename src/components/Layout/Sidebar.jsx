@@ -8,7 +8,6 @@ import {
 } from "react-icons/fi";
 import classes from "./Sidebar.module.css";
 import NavItem from "./NavItem";
-import { useState } from "react";
 
 const navItems = [
   {
@@ -43,9 +42,7 @@ const navItems = [
   },
 ];
 
-export default function Sidebar() {
-  const [activeItemId, setActiveItemId] = useState(1);
-
+export default function Sidebar({ activeItemId, setActiveItemId }) {
   function handleSelect(id) {
     setActiveItemId(id);
   }
