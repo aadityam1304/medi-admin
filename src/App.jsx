@@ -45,7 +45,9 @@ export default function App() {
       <main className={classes.main}>
         <Header />
         {activeItemId === 1 && <Dashboard />}
-        {activeItemId === 2 && <Inventory medicines={medicines} />}
+        {activeItemId === 2 && (
+          <Inventory medicines={medicines} setMedicines={setMedicines} />
+        )}
         {activeItemId === 3 && <Orders />}
         {activeItemId === 4 && <h1>AI Insights</h1>}
         {activeItemId === 5 && <h1>Settings</h1>}

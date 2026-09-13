@@ -1,0 +1,109 @@
+/* Remove number input arrows - Chrome, Safari, Edge */
+.form input[type="number"]::-webkit-inner-spin-button,
+.form input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove number input arrows - Firefox */
+.form input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: var(--spacing-lg) auto;
+  padding: var(--spacing-xl);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+}
+
+.form h3 {
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text);
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.form label {
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.form input {
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 1.3rem;
+  color: var(--color-text);
+  background: var(--color-white);
+  outline: none;
+}
+
+.form input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgb(37 99 235 / 10%);
+}
+
+.form input::placeholder {
+  color: var(--color-text-light);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+}
+
+.cancelButton,
+.submitButton {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
+}
+
+.cancelButton {
+  color: var(--color-text);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+}
+
+.cancelButton:hover {
+  background: var(--color-background);
+}
+
+.submitButton {
+  color: var(--color-white);
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.submitButton:hover {
+  background: #1d4ed8;
+}
+
+.cancelButton:focus,
+.submitButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(37 99 235 / 15%);
+}
+
+.cancelButton:active,
+.submitButton:active {
+  transform: translateY(1px);
+}
