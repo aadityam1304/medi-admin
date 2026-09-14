@@ -3,11 +3,18 @@ import classes from "./Inventory.module.css";
 import AddMedicineForm from "./AddMedicineForm";
 import EditMedicineForm from "./EditMedicineForm";
 
-export default function Inventory({ medicines, setMedicines }) {
+export default function Inventory({
+  medicines,
+  setMedicines,
+  onDeleteMedicine,
+}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [showForm, setShowForm] = useState(false);
   const [editingMedicineId, setEditingMedicineId] = useState(null);
+  const [deletingMedicineId, setDeletingMedicineId] = useState(null);
+  const [stoackUpdateMedicineId, setStoackUpdateMedicineId] = useState(null);
+  const [stockToAdd, setStockToAdd] = useState("");
 
   const filteredMedicines = medicines.filter((medicine) => {
     let status;
@@ -36,6 +43,10 @@ export default function Inventory({ medicines, setMedicines }) {
     (medicine) => medicine.id === editingMedicineId,
   );
 
+  const medicineToDelete = medicines.find(
+    (medicine) => medicine.id === deletingMedicineId,
+  );
+
   function handleEditMedicine(id) {
     setEditingMedicineId(id);
   }
@@ -46,12 +57,19 @@ export default function Inventory({ medicines, setMedicines }) {
         medicine.id === updatedMedicine.id ? updatedMedicine : medicine,
       ),
     );
+
     setEditingMedicineId(null);
+  }
+
+  function handleConfirmDelete() {
+    onDeleteMedicine(deletingMedicineId);
+    setDeletingMedicineId(null);
   }
 
   return (
     <div className={classes.inventory}>
       <h2 className={classes.heading}>Medicine Inventory</h2>
+
       <input
         className={classes.searchInput}
         type="text"
@@ -59,6 +77,7 @@ export default function Inventory({ medicines, setMedicines }) {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+
       <select
         className={classes.statusFilter}
         value={statusFilter}
@@ -69,21 +88,51 @@ export default function Inventory({ medicines, setMedicines }) {
         <option value="Low Stock">Low Stock</option>
         <option value="Out of Stock">Out of Stock</option>
       </select>
+
       <button className={classes.addButton} onClick={() => setShowForm(true)}>
         + Add Medicine
-      </button>{" "}
+      </button>
+
       {showForm && (
         <AddMedicineForm
           onCancel={() => setShowForm(false)}
           onAddMedicine={handleAddMedicine}
         />
       )}
+
       {medicineToEdit && (
         <EditMedicineForm
           medicine={medicineToEdit}
           onUpdateMedicine={handleUpdateMedicine}
+          onCancel={() => setEditingMedicineId(null)}
         />
       )}
+
+      {medicineToDelete && (
+        <div className={classes.deleteConfirmation}>
+          <p>
+            Are you sure you want to delete{" "}
+            <strong>{medicineToDelete.name}</strong>?
+          </p>
+
+          <div className={classes.deleteActions}>
+            <button
+              className={classes.cancelDeleteButton}
+              onClick={() => setDeletingMedicineId(null)}
+            >
+              Cancel
+            </button>
+
+            <button
+              className={classes.confirmDeleteButton}
+              onClick={handleConfirmDelete}
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      )}
+
       <table>
         <thead>
           <tr>
@@ -124,12 +173,20 @@ export default function Inventory({ medicines, setMedicines }) {
                   <td>₹{medicine.price}</td>
                   <td>{medicine.stock}</td>
                   <td className={statusClass}>{status}</td>
+
                   <td>
                     <button
                       onClick={() => handleEditMedicine(medicine.id)}
                       className={classes.editButton}
                     >
                       Edit
+                    </button>
+
+                    <button
+                      onClick={() => setDeletingMedicineId(medicine.id)}
+                      className={classes.deleteButton}
+                    >
+                      Delete
                     </button>
                   </td>
                 </tr>

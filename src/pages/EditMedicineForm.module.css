@@ -50,3 +50,54 @@
   appearance: textfield;
   -moz-appearance: textfield;
 }
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+}
+
+.cancelButton,
+.submitButton {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
+}
+
+.cancelButton {
+  color: var(--color-text);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+}
+
+.cancelButton:hover {
+  background: var(--color-background);
+}
+
+.submitButton {
+  color: var(--color-white);
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.submitButton:hover {
+  background: #1d4ed8;
+}
+
+.cancelButton:focus,
+.submitButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(37 99 235 / 15%);
+}
+
+.cancelButton:active,
+.submitButton:active {
+  transform: translateY(1px);
+}

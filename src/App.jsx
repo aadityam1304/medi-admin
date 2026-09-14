@@ -8,6 +8,7 @@ import Orders from "./pages/Orders";
 
 export default function App() {
   const [activeItemId, setActiveItemId] = useState(1);
+
   const [medicines, setMedicines] = useState([
     {
       id: 1,
@@ -38,18 +39,34 @@ export default function App() {
       stock: 0,
     },
   ]);
+
+  function handleDeleteMedicine(id) {
+    setMedicines((medicines) =>
+      medicines.filter((medicine) => medicine.id !== id),
+    );
+  }
+
   return (
     <div className={classes.app}>
       <Sidebar activeItemId={activeItemId} setActiveItemId={setActiveItemId} />
 
       <main className={classes.main}>
         <Header />
+
         {activeItemId === 1 && <Dashboard />}
+
         {activeItemId === 2 && (
-          <Inventory medicines={medicines} setMedicines={setMedicines} />
+          <Inventory
+            medicines={medicines}
+            setMedicines={setMedicines}
+            onDeleteMedicine={handleDeleteMedicine}
+          />
         )}
+
         {activeItemId === 3 && <Orders />}
+
         {activeItemId === 4 && <h1>AI Insights</h1>}
+
         {activeItemId === 5 && <h1>Settings</h1>}
       </main>
     </div>

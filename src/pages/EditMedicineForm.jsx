@@ -1,7 +1,11 @@
 import { useState } from "react";
 import classes from "./EditMedicineForm.module.css";
 
-export default function EditMedicineForm({ medicine, onUpdateMedicine }) {
+export default function EditMedicineForm({
+  medicine,
+  onUpdateMedicine,
+  onCancel,
+}) {
   const [name, setName] = useState(medicine.name);
   const [category, setCategory] = useState(medicine.category);
   const [price, setPrice] = useState(medicine.price);
@@ -59,7 +63,11 @@ export default function EditMedicineForm({ medicine, onUpdateMedicine }) {
         required
       />
       <div className={classes.formActions}>
-        <button type="button" className={classes.cancelButton}>
+        <button
+          type="button"
+          className={classes.cancelButton}
+          onClick={onCancel}
+        >
           Cancel
         </button>
 
