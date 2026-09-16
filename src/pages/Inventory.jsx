@@ -13,8 +13,11 @@ export default function Inventory({
   const [showForm, setShowForm] = useState(false);
   const [editingMedicineId, setEditingMedicineId] = useState(null);
   const [deletingMedicineId, setDeletingMedicineId] = useState(null);
-  const [stoackUpdateMedicineId, setStoackUpdateMedicineId] = useState(null);
+
+  // Update Stock state
+  const [stockUpdateMedicineId, setStockUpdateMedicineId] = useState(null);
   const [stockToAdd, setStockToAdd] = useState("");
+  const [stockError, setStockError] = useState("");
 
   const filteredMedicines = medicines.filter((medicine) => {
     let status;
@@ -47,6 +50,10 @@ export default function Inventory({
     (medicine) => medicine.id === deletingMedicineId,
   );
 
+  const medicineToUpdateStock = medicines.find(
+    (medicine) => medicine.id === stockUpdateMedicineId,
+  );
+
   function handleEditMedicine(id) {
     setEditingMedicineId(id);
   }
@@ -59,6 +66,33 @@ export default function Inventory({
     );
 
     setEditingMedicineId(null);
+  }
+
+  function handleUpdateStock() {
+    const quantity = Number(stockToAdd);
+
+    if (quantity <= 0) {
+      setStockError("Please enter a quantity greater than 0.");
+      return;
+    }
+
+    setMedicines((medicines) =>
+      medicines.map((medicine) =>
+        medicine.id === stockUpdateMedicineId
+          ? { ...medicine, stock: medicine.stock + quantity }
+          : medicine,
+      ),
+    );
+
+    setStockUpdateMedicineId(null);
+    setStockToAdd("");
+    setStockError("");
+  }
+
+  function handleCancelStockUpdate() {
+    setStockUpdateMedicineId(null);
+    setStockToAdd("");
+    setStockError("");
   }
 
   function handleConfirmDelete() {
@@ -133,6 +167,46 @@ export default function Inventory({
         </div>
       )}
 
+      {medicineToUpdateStock && (
+        <div className={classes.stockUpdateCard}>
+          <h3>Update Stock</h3>
+
+          <p>
+            Medicine: <strong>{medicineToUpdateStock.name}</strong>
+          </p>
+
+          <p>
+            Current Stock: <strong>{medicineToUpdateStock.stock}</strong>
+          </p>
+
+          <input
+            className={classes.stockInput}
+            type="number"
+            value={stockToAdd}
+            onChange={(e) => setStockToAdd(e.target.value)}
+            placeholder="Enter quantity"
+          />
+
+          {stockError && <p className={classes.stockError}>{stockError}</p>}
+
+          <div className={classes.stockActions}>
+            <button
+              className={classes.updateStockButton}
+              onClick={handleUpdateStock}
+            >
+              Add Stock
+            </button>
+
+            <button
+              className={classes.cancelStockButton}
+              onClick={handleCancelStockUpdate}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
       <table>
         <thead>
           <tr>
@@ -187,6 +261,17 @@ export default function Inventory({
                       className={classes.deleteButton}
                     >
                       Delete
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setStockUpdateMedicineId(medicine.id);
+                        setStockToAdd("");
+                        setStockError("");
+                      }}
+                      className={classes.stockButton}
+                    >
+                      Update Stock
                     </button>
                   </td>
                 </tr>
