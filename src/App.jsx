@@ -53,7 +53,7 @@ export default function App() {
       <main className={classes.main}>
         <Header />
 
-        {activeItemId === 1 && <Dashboard />}
+        {activeItemId === 1 && <Dashboard medicines={medicines} />}
 
         {activeItemId === 2 && (
           <Inventory

@@ -2,7 +2,6 @@ import { useState } from "react";
 import classes from "./Inventory.module.css";
 import AddMedicineForm from "./AddMedicineForm";
 import EditMedicineForm from "./EditMedicineForm";
-import SummaryCard from "./SummaryCard";
 
 export default function Inventory({
   medicines,
@@ -38,22 +37,6 @@ export default function Inventory({
       (statusFilter === "All" || status === statusFilter)
     );
   });
-
-  // Inventory Summary
-  const totalMedicine = medicines.length;
-
-  const totalStock = medicines.reduce(
-    (total, medicine) => total + medicine.stock,
-    0,
-  );
-
-  const lowStockMedicine = medicines.filter(
-    (medicine) => medicine.stock > 0 && medicine.stock <= 20,
-  ).length;
-
-  const outOfStockMedicine = medicines.filter(
-    (medicine) => medicine.stock === 0,
-  ).length;
 
   // Add Medicine
   function handleAddMedicine(newMedicine) {
@@ -136,14 +119,6 @@ export default function Inventory({
             Manage your medicines and monitor stock levels.
           </p>
         </div>
-      </div>
-
-      {/* Inventory Summary */}
-      <div className={classes.summary}>
-        <SummaryCard title="Total Medicine" value={totalMedicine} />
-        <SummaryCard title="Total Stock" value={totalStock} />
-        <SummaryCard title="Low Stock" value={lowStockMedicine} />
-        <SummaryCard title="Out of Stock" value={outOfStockMedicine} />
       </div>
 
       {/* Search / Filter / Add */}

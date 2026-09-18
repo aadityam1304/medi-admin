@@ -25,17 +25,6 @@
 }
 
 /* =========================
-   Summary
-========================= */
-
-.summary {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.6rem;
-  margin-bottom: 2.4rem;
-}
-
-/* =========================
    Search / Filter / Add
 ========================= */
 
