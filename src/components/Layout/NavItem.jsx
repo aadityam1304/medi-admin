@@ -7,7 +7,9 @@ export default function NavItem({ id, icon, label, onSelect, isActive }) {
       onClick={() => onSelect(id)}
     >
       {icon}
-      <span>{label}</span>
+      <span className={classes.label}>{label}</span>
+
+      <span className={classes.tooltip}>{label}</span>
     </li>
   );
 }

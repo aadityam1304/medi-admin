@@ -2,6 +2,7 @@ import { useState } from "react";
 import classes from "./Inventory.module.css";
 import AddMedicineForm from "./AddMedicineForm";
 import EditMedicineForm from "./EditMedicineForm";
+import SummaryCard from "./SummaryCard";
 
 export default function Inventory({
   medicines,
@@ -19,6 +20,7 @@ export default function Inventory({
   const [stockToAdd, setStockToAdd] = useState("");
   const [stockError, setStockError] = useState("");
 
+  // Filter medicines
   const filteredMedicines = medicines.filter((medicine) => {
     let status;
 
@@ -37,23 +39,44 @@ export default function Inventory({
     );
   });
 
+  // Inventory Summary
+  const totalMedicine = medicines.length;
+
+  const totalStock = medicines.reduce(
+    (total, medicine) => total + medicine.stock,
+    0,
+  );
+
+  const lowStockMedicine = medicines.filter(
+    (medicine) => medicine.stock > 0 && medicine.stock <= 20,
+  ).length;
+
+  const outOfStockMedicine = medicines.filter(
+    (medicine) => medicine.stock === 0,
+  ).length;
+
+  // Add Medicine
   function handleAddMedicine(newMedicine) {
     setMedicines((medicines) => [...medicines, newMedicine]);
     setShowForm(false);
   }
 
+  // Medicine to edit
   const medicineToEdit = medicines.find(
     (medicine) => medicine.id === editingMedicineId,
   );
 
+  // Medicine to delete
   const medicineToDelete = medicines.find(
     (medicine) => medicine.id === deletingMedicineId,
   );
 
+  // Medicine to update stock
   const medicineToUpdateStock = medicines.find(
     (medicine) => medicine.id === stockUpdateMedicineId,
   );
 
+  // Edit Medicine
   function handleEditMedicine(id) {
     setEditingMedicineId(id);
   }
@@ -68,6 +91,7 @@ export default function Inventory({
     setEditingMedicineId(null);
   }
 
+  // Update Stock
   function handleUpdateStock() {
     const quantity = Number(stockToAdd);
 
@@ -95,6 +119,7 @@ export default function Inventory({
     setStockError("");
   }
 
+  // Delete Medicine
   function handleConfirmDelete() {
     onDeleteMedicine(deletingMedicineId);
     setDeletingMedicineId(null);
@@ -102,31 +127,52 @@ export default function Inventory({
 
   return (
     <div className={classes.inventory}>
-      <h2 className={classes.heading}>Medicine Inventory</h2>
+      {/* Header */}
+      <div className={classes.header}>
+        <div>
+          <h2 className={classes.heading}>Medicine Inventory</h2>
 
-      <input
-        className={classes.searchInput}
-        type="text"
-        placeholder="Search medicine"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
+          <p className={classes.subtitle}>
+            Manage your medicines and monitor stock levels.
+          </p>
+        </div>
+      </div>
 
-      <select
-        className={classes.statusFilter}
-        value={statusFilter}
-        onChange={(e) => setStatusFilter(e.target.value)}
-      >
-        <option value="All">All Status</option>
-        <option value="In Stock">In Stock</option>
-        <option value="Low Stock">Low Stock</option>
-        <option value="Out of Stock">Out of Stock</option>
-      </select>
+      {/* Inventory Summary */}
+      <div className={classes.summary}>
+        <SummaryCard title="Total Medicine" value={totalMedicine} />
+        <SummaryCard title="Total Stock" value={totalStock} />
+        <SummaryCard title="Low Stock" value={lowStockMedicine} />
+        <SummaryCard title="Out of Stock" value={outOfStockMedicine} />
+      </div>
 
-      <button className={classes.addButton} onClick={() => setShowForm(true)}>
-        + Add Medicine
-      </button>
+      {/* Search / Filter / Add */}
+      <div className={classes.toolbar}>
+        <input
+          className={classes.searchInput}
+          type="text"
+          placeholder="Search medicine"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
 
+        <select
+          className={classes.statusFilter}
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+        >
+          <option value="All">All Status</option>
+          <option value="In Stock">In Stock</option>
+          <option value="Low Stock">Low Stock</option>
+          <option value="Out of Stock">Out of Stock</option>
+        </select>
+
+        <button className={classes.addButton} onClick={() => setShowForm(true)}>
+          + Add Medicine
+        </button>
+      </div>
+
+      {/* Add Medicine Form */}
       {showForm && (
         <AddMedicineForm
           onCancel={() => setShowForm(false)}
@@ -134,6 +180,7 @@ export default function Inventory({
         />
       )}
 
+      {/* Edit Medicine Form */}
       {medicineToEdit && (
         <EditMedicineForm
           medicine={medicineToEdit}
@@ -142,31 +189,37 @@ export default function Inventory({
         />
       )}
 
+      {/* Delete Confirmation */}
       {medicineToDelete && (
-        <div className={classes.deleteConfirmation}>
-          <p>
-            Are you sure you want to delete{" "}
-            <strong>{medicineToDelete.name}</strong>?
-          </p>
+        <div className={classes.deleteOverlay}>
+          <div className={classes.deleteConfirmation}>
+            <h3>Delete Medicine</h3>
 
-          <div className={classes.deleteActions}>
-            <button
-              className={classes.cancelDeleteButton}
-              onClick={() => setDeletingMedicineId(null)}
-            >
-              Cancel
-            </button>
+            <p>
+              Are you sure you want to delete{" "}
+              <strong>{medicineToDelete.name}</strong>?
+            </p>
 
-            <button
-              className={classes.confirmDeleteButton}
-              onClick={handleConfirmDelete}
-            >
-              Delete
-            </button>
+            <div className={classes.deleteActions}>
+              <button
+                className={classes.cancelDeleteButton}
+                onClick={() => setDeletingMedicineId(null)}
+              >
+                Cancel
+              </button>
+
+              <button
+                className={classes.confirmDeleteButton}
+                onClick={handleConfirmDelete}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       )}
 
+      {/* Update Stock */}
       {medicineToUpdateStock && (
         <div className={classes.stockUpdateCard}>
           <h3>Update Stock</h3>
@@ -182,6 +235,7 @@ export default function Inventory({
           <input
             className={classes.stockInput}
             type="number"
+            min="1"
             value={stockToAdd}
             onChange={(e) => setStockToAdd(e.target.value)}
             placeholder="Enter quantity"
@@ -207,79 +261,90 @@ export default function Inventory({
         </div>
       )}
 
-      <table>
-        <thead>
-          <tr>
-            <th>Medicine</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Stock</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {filteredMedicines.length === 0 ? (
+      {/* Medicine Table */}
+      <div className={classes.tableWrapper}>
+        <table className={classes.table}>
+          <thead>
             <tr>
-              <td colSpan="6">No medicines found</td>
+              <th>Medicine</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
-          ) : (
-            filteredMedicines.map((medicine) => {
-              let status;
-              let statusClass;
+          </thead>
 
-              if (medicine.stock === 0) {
-                status = "Out of Stock";
-                statusClass = classes.stockOut;
-              } else if (medicine.stock <= 20) {
-                status = "Low Stock";
-                statusClass = classes.stockLow;
-              } else {
-                status = "In Stock";
-                statusClass = classes.stockIn;
-              }
+          <tbody>
+            {filteredMedicines.length === 0 ? (
+              <tr>
+                <td colSpan="6">No medicines found</td>
+              </tr>
+            ) : (
+              filteredMedicines.map((medicine) => {
+                let status;
+                let statusClass;
 
-              return (
-                <tr key={medicine.id}>
-                  <td>{medicine.name}</td>
-                  <td>{medicine.category}</td>
-                  <td>₹{medicine.price}</td>
-                  <td>{medicine.stock}</td>
-                  <td className={statusClass}>{status}</td>
+                if (medicine.stock === 0) {
+                  status = "Out of Stock";
+                  statusClass = classes.stockOut;
+                } else if (medicine.stock <= 20) {
+                  status = "Low Stock";
+                  statusClass = classes.stockLow;
+                } else {
+                  status = "In Stock";
+                  statusClass = classes.stockIn;
+                }
 
-                  <td>
-                    <button
-                      onClick={() => handleEditMedicine(medicine.id)}
-                      className={classes.editButton}
-                    >
-                      Edit
-                    </button>
+                return (
+                  <tr key={medicine.id}>
+                    <td>{medicine.name}</td>
 
-                    <button
-                      onClick={() => setDeletingMedicineId(medicine.id)}
-                      className={classes.deleteButton}
-                    >
-                      Delete
-                    </button>
+                    <td>{medicine.category}</td>
 
-                    <button
-                      onClick={() => {
-                        setStockUpdateMedicineId(medicine.id);
-                        setStockToAdd("");
-                        setStockError("");
-                      }}
-                      className={classes.stockButton}
-                    >
-                      Update Stock
-                    </button>
-                  </td>
-                </tr>
-              );
-            })
-          )}
-        </tbody>
-      </table>
+                    <td>₹{medicine.price}</td>
+
+                    <td>{medicine.stock}</td>
+
+                    <td>
+                      <span className={`${classes.status} ${statusClass}`}>
+                        {status}
+                      </span>
+                    </td>
+
+                    <td className={classes.actions}>
+                      <button
+                        onClick={() => handleEditMedicine(medicine.id)}
+                        className={classes.editButton}
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        onClick={() => setDeletingMedicineId(medicine.id)}
+                        className={classes.deleteButton}
+                      >
+                        Delete
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          setStockUpdateMedicineId(medicine.id);
+                          setStockToAdd("");
+                          setStockError("");
+                        }}
+                        className={classes.stockButton}
+                      >
+                        Update Stock
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
