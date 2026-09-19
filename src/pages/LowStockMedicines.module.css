@@ -1,0 +1,42 @@
+.container {
+  padding: 2.4rem;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.2rem;
+}
+
+.medicine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+  margin-top: 1.6rem;
+  padding: 1.6rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.8rem;
+}
+
+.name {
+  margin: 0;
+  font-weight: 600;
+  color: #111827;
+}
+
+.category {
+  margin: 0;
+  color: #6b7280;
+}
+
+.stock {
+  margin: 0;
+  font-weight: 600;
+  color: #f59e0b;
+}
+
+.badge {
+  padding: 0.4rem 0.8rem;
+  background-color: #ef4444;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
