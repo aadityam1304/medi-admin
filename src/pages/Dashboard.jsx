@@ -46,11 +46,14 @@ export default function Dashboard({ medicines }) {
 
   return (
     <div>
-      <h2>Welcome to Dashboard</h2>
+      <div className={classes.dashboardHeader}>
+        <h2>Welcome to Dashboard</h2>
 
-      <h3> Inventory Summary</h3>
+        <h3>Inventory Summary</h3>
 
-      <p className={classes.stockDate}>{formattedDate} · Current Stock</p>
+        <p className={classes.stockDate}>{formattedDate} · Current Stock</p>
+      </div>
+
       <div className={classes.summary}>
         <SummaryCard title="Total Medicine" value={totalMedicine} />
         <SummaryCard title="Total Stock" value={totalStock} />
@@ -66,7 +69,10 @@ export default function Dashboard({ medicines }) {
           outOfStockQuantity={outOfStockQuantity}
         />
 
-        <LowStockMedicines medicines={lowStockMedicines} />
+        <LowStockMedicines
+          medicines={lowStockMedicines}
+          count={lowStockMedicine}
+        />
       </div>
     </div>
   );

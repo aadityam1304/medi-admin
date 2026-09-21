@@ -1,6 +1,30 @@
+/* =========================
+   Dashboard Header
+========================= */
+
+.dashboardHeader {
+  margin-bottom: 2.4rem;
+}
+
+.dashboardHeader h2 {
+  margin: 0 0 0.6rem;
+
+  font-size: 2rem;
+  color: var(--color-text);
+}
+
+.dashboardHeader h3 {
+  margin: 0 0 0.4rem;
+
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
 .stockDate {
-  margin: -1rem 0 1.6rem;
-  font-size: 1.3rem;
+  margin: 0;
+
+  font-size: 1.15rem;
   color: var(--color-text-light);
 }
 
@@ -10,14 +34,60 @@
 
 .summary {
   display: grid;
-  width: 50%;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.6rem;
+
   margin-bottom: 2.4rem;
 }
 
+/* =========================
+   Dashboard Grid
+========================= */
+
 .dashboardGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2.4rem;
+  grid-template-columns: 3fr 3fr;
+  gap: 1.6rem;
+  align-items: start;
+}
+
+/* =========================
+   Tablet
+========================= */
+
+@media (max-width: 900px) {
+  .summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 600px) {
+  .summary {
+    grid-template-columns: repeat(2, 1fr);
+
+    width: 90%;
+    max-width: 500px;
+
+    margin: 0 auto 2.4rem;
+  }
+
+  .dashboardGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboardHeader h2 {
+    font-size: 1.7rem;
+  }
+
+  .dashboardHeader h3 {
+    font-size: 1.25rem;
+  }
+
+  .stockDate {
+    font-size: 1rem;
+  }
 }

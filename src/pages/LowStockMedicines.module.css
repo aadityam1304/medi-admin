@@ -1,42 +1,137 @@
 .container {
-  padding: 2.4rem;
   background-color: #fff;
   border: 1px solid #e5e7eb;
-  border-radius: 1.2rem;
+  border-radius: 0.8rem;
+  padding: 1.6rem;
 }
+
+/* Header */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.4rem;
+}
+
+.header h3 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 2.2rem;
+  height: 2.2rem;
+
+  padding: 0 0.5rem;
+
+  border-radius: 50%;
+
+  background-color: #fee2e2;
+  color: #dc2626;
+
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+/* Medicine row */
 
 .medicine {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.6rem;
-  margin-top: 1.6rem;
-  padding: 1.6rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.8rem;
+
+  gap: 1rem;
+  padding: 1rem 0;
+
+  border-bottom: 1px solid #e5e7eb;
 }
 
+.medicine:last-child {
+  border-bottom: none;
+}
+
+/* Medicine information */
+
 .name {
-  margin: 0;
+  margin: 0 0 0.3rem;
+
+  font-size: 1.5rem;
   font-weight: 600;
   color: #111827;
 }
 
 .category {
   margin: 0;
+
+  font-size: 0.85rem;
   color: #6b7280;
+  font-size: 1.1rem;
+}
+
+/* Stock information */
+
+.stockInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
 }
 
 .stock {
   margin: 0;
+
+  font-size: 1.5rem;
   font-weight: 600;
-  color: #f59e0b;
+  color: #111827;
+
+  white-space: nowrap;
 }
 
+/* Badge */
+
 .badge {
-  padding: 0.4rem 0.8rem;
-  background-color: #ef4444;
-  border-radius: 2rem;
-  font-size: 1.2rem;
+  padding: 0.35rem 0.65rem;
+
+  border-radius: 999px;
+
+  background-color: #fee2e2;
+  color: #dc2626;
+
+  font-size: 1rem;
   font-weight: 600;
+
+  white-space: nowrap;
+}
+
+/* Empty state */
+
+.empty {
+  margin: 0;
+  padding: 1.6rem 1rem;
+
+  text-align: center;
+
+  color: #16a34a;
+
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .medicine {
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .stockInfo {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
 }
