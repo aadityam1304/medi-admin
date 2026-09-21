@@ -39,6 +39,40 @@ export default function App() {
       stock: 0,
     },
   ]);
+  const [orders, setOrders] = useState([
+    {
+      id: 1,
+      orderId: "ORD001",
+      medicineId: 1,
+      unitPrice: 25,
+      quantity: 2,
+      status: "Completed",
+    },
+    {
+      id: 2,
+      orderId: "ORD002",
+      medicineId: 2,
+      unitPrice: 40,
+      quantity: 5,
+      status: "Pending",
+    },
+    {
+      id: 3,
+      orderId: "ORD003",
+      medicineId: 3,
+      unitPrice: 180,
+      quantity: 1,
+      status: "Completed",
+    },
+    {
+      id: 4,
+      orderId: "ORD004",
+      medicineId: 1,
+      unitPrice: 25,
+      quantity: 3,
+      status: "Cancelled",
+    },
+  ]);
 
   function handleDeleteMedicine(id) {
     setMedicines((medicines) =>
@@ -63,7 +97,14 @@ export default function App() {
           />
         )}
 
-        {activeItemId === 3 && <Orders />}
+        {activeItemId === 3 && (
+          <Orders
+            medicines={medicines}
+            orders={orders}
+            setMedicines={setMedicines}
+            setOrders={setOrders}
+          />
+        )}
 
         {activeItemId === 4 && <h1>AI Insights</h1>}
 
