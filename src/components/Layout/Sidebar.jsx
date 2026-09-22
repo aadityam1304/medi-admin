@@ -36,12 +36,20 @@ const navItems = [
   },
 ];
 
-export default function Sidebar({ activeItemId, setActiveItemId }) {
+export default function Sidebar({
+  activeItemId,
+  setActiveItemId,
+  isSidebarOpen,
+  setIsSidebarOpen,
+}) {
   function handleSelect(id) {
     setActiveItemId(id);
+    setIsSidebarOpen(false);
   }
   return (
-    <aside className={classes.sidebar}>
+    <aside
+      className={`${classes.sidebar} ${isSidebarOpen ? classes.open : ""}`}
+    >
       <div className={classes.logo}>
         <div className={classes.logoIcon}>💊</div>
 

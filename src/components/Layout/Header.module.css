@@ -22,8 +22,43 @@
   font-size: 1.4rem;
 }
 
-@media (max-width: 40rem) {
+.menuButton {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  .menuButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 4rem;
+    height: 4rem;
+    padding: 0;
+    border: none;
+    border-radius: 0.8rem;
+    background-color: #f8fafc;
+    color: #111827;
+    font-size: 2.2rem;
+    cursor: pointer;
+  }
+
+  .title {
+    flex: 1;
+    min-width: 0;
+  }
+
   .title h1 {
-    font-size: 2.4rem;
+    font-size: 1.8rem;
+  }
+
+  .title p {
+    font-size: 1.2rem;
   }
 }

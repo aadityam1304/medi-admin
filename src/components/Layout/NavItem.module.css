@@ -28,6 +28,7 @@
 .navItem svg {
   width: 1.9rem;
   height: 1.9rem;
+  flex-shrink: 0;
 }
 
 .label {
@@ -47,6 +48,10 @@
 .tooltip {
   display: none;
 }
+
+/* =========================
+   Tablet
+========================= */
 
 @media (max-width: 60rem) {
   .navItem {
@@ -82,5 +87,33 @@
     white-space: nowrap;
 
     z-index: 9999;
+  }
+}
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 40rem) {
+  .navItem {
+    justify-content: flex-start;
+    width: 100%;
+    height: auto;
+    padding: 1.2rem;
+  }
+
+  .navItem svg {
+    display: block;
+    width: 1.9rem;
+    height: 1.9rem;
+    flex-shrink: 0;
+  }
+
+  .label {
+    display: block;
+  }
+
+  .tooltip {
+    display: none !important;
   }
 }

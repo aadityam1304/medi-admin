@@ -5,9 +5,11 @@ import classes from "./App.module.css";
 import Dashboard from "./pages/Dashboard";
 import Inventory from "./pages/Inventory";
 import Orders from "./pages/Orders";
+import AIInsights from "./pages/AIInsights";
 
 export default function App() {
   const [activeItemId, setActiveItemId] = useState(1);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const [medicines, setMedicines] = useState([
     {
@@ -82,10 +84,15 @@ export default function App() {
 
   return (
     <div className={classes.app}>
-      <Sidebar activeItemId={activeItemId} setActiveItemId={setActiveItemId} />
+      <Sidebar
+        activeItemId={activeItemId}
+        setActiveItemId={setActiveItemId}
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
 
       <main className={classes.main}>
-        <Header />
+        <Header setIsSidebarOpen={setIsSidebarOpen} />
 
         {activeItemId === 1 && <Dashboard medicines={medicines} />}
 
@@ -106,7 +113,7 @@ export default function App() {
           />
         )}
 
-        {activeItemId === 4 && <h1>AI Insights</h1>}
+        {activeItemId === 4 && <AIInsights medicines={medicines} />}
 
         {activeItemId === 5 && <h1>Settings</h1>}
       </main>

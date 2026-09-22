@@ -1,0 +1,263 @@
+.container {
+  padding: 2.4rem;
+}
+
+.header {
+  margin-bottom: 2.4rem;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 2.4rem;
+  color: #111827;
+}
+
+.header p {
+  margin-top: 0.6rem;
+  color: #6b7280;
+  font-size: 1.4rem;
+}
+
+/* Alert Cards */
+
+.alertGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.alertCard {
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.2rem;
+  padding: 2rem;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.6rem;
+}
+
+.cardHeader h3 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: #111827;
+}
+
+.cardHeader p {
+  margin: 0.5rem 0 0;
+  font-size: 1.2rem;
+  color: #6b7280;
+}
+
+.count {
+  min-width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.dangerCount {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.warningCount {
+  background-color: #fff7ed;
+  color: #ea580c;
+}
+
+.alertItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.alertItem strong {
+  font-size: 1.4rem;
+  color: #111827;
+}
+
+.alertItem span {
+  font-size: 1.3rem;
+  color: #dc2626;
+}
+
+/* Empty State */
+
+.emptyState {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.4rem 0 0.4rem;
+}
+
+.emptyState span {
+  width: 2.8rem;
+  height: 2.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #f0fdf4;
+  color: #16a34a;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.emptyState p {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #6b7280;
+}
+
+/* Smart Recommendations */
+
+.recommendationCard {
+  margin-top: 2rem;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.2rem;
+  padding: 2rem;
+}
+
+.recommendationCard h3 {
+  margin: 0 0 1.6rem;
+  font-size: 1.6rem;
+  color: #111827;
+}
+
+.recommendationItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  padding: 1.6rem 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.recommendationIcon {
+  width: 3.6rem;
+  height: 3.6rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.8rem;
+  background-color: #f3f0ff;
+  font-size: 1.6rem;
+}
+
+.recommendationContent {
+  flex: 1;
+}
+
+.recommendationContent strong {
+  font-size: 1.4rem;
+  color: #111827;
+}
+
+.recommendationContent p {
+  margin: 0.5rem 0 0;
+  font-size: 1.3rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* Inventory Health */
+
+.healthCard {
+  margin-top: 2rem;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.2rem;
+  padding: 2rem;
+}
+
+.healthHeader {
+  margin-bottom: 2rem;
+}
+
+.healthHeader h3 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: #111827;
+}
+
+.healthHeader p {
+  margin: 0.5rem 0 0;
+  font-size: 1.3rem;
+  color: #6b7280;
+}
+
+.healthGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+}
+
+.healthItem {
+  padding: 1.6rem;
+  background-color: #f8fafc;
+  border-radius: 0.8rem;
+}
+
+.healthItem span {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-size: 1.2rem;
+  color: #6b7280;
+}
+
+.healthItem strong {
+  font-size: 2rem;
+  color: #111827;
+}
+
+.healthItem.total {
+  border-left: 4px solid #2563eb;
+}
+
+.healthItem.healthy {
+  border-left: 4px solid #16a34a;
+}
+
+.healthItem.low {
+  border-left: 4px solid #f59e0b;
+}
+
+.healthItem.out {
+  border-left: 4px solid #dc2626;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .healthGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .alertGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 1.6rem;
+  }
+
+  .healthGrid {
+    grid-template-columns: 1fr;
+  }
+}

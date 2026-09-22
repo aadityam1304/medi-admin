@@ -1,6 +1,7 @@
+import { FiMenu } from "react-icons/fi";
 import classes from "./Header.module.css";
 
-export default function Header() {
+export default function Header({ setIsSidebarOpen }) {
   const hour = new Date().getHours();
 
   let greeting;
@@ -14,6 +15,12 @@ export default function Header() {
   }
   return (
     <header className={classes.header}>
+      <button
+        className={classes.menuButton}
+        onClick={() => setIsSidebarOpen((isOpen) => !isOpen)}
+      >
+        <FiMenu />
+      </button>
       <div className={classes.title}>
         <h1>{greeting}, Admin 👋</h1>
         <p>Here's what's happening with your pharmacy today.</p>
