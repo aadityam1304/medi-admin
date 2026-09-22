@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Inventory from "./pages/Inventory";
 import Orders from "./pages/Orders";
 import AIInsights from "./pages/AIInsights";
+import Settings from "./pages/Settings";
 
 export default function App() {
   const [activeItemId, setActiveItemId] = useState(1);
@@ -115,7 +116,7 @@ export default function App() {
 
         {activeItemId === 4 && <AIInsights medicines={medicines} />}
 
-        {activeItemId === 5 && <h1>Settings</h1>}
+        {activeItemId === 5 && <Settings />}
       </main>
     </div>
   );
