@@ -50,6 +50,7 @@ export default function App() {
       unitPrice: 25,
       quantity: 2,
       status: "Completed",
+      date: "2026-09-20",
     },
     {
       id: 2,
@@ -58,6 +59,7 @@ export default function App() {
       unitPrice: 40,
       quantity: 5,
       status: "Pending",
+      date: "2026-09-21",
     },
     {
       id: 3,
@@ -66,6 +68,7 @@ export default function App() {
       unitPrice: 180,
       quantity: 1,
       status: "Completed",
+      date: "2026-09-18",
     },
     {
       id: 4,
@@ -74,6 +77,7 @@ export default function App() {
       unitPrice: 25,
       quantity: 3,
       status: "Cancelled",
+      date: "2026-09-15",
     },
   ]);
 
@@ -114,7 +118,9 @@ export default function App() {
           />
         )}
 
-        {activeItemId === 4 && <AIInsights medicines={medicines} />}
+        {activeItemId === 4 && (
+          <AIInsights medicines={medicines} orders={orders} />
+        )}
 
         {activeItemId === 5 && <Settings />}
       </main>

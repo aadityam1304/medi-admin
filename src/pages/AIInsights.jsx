@@ -1,6 +1,6 @@
 import classes from "./AIInsights.module.css";
 
-export default function AIInsights({ medicines }) {
+export default function AIInsights({ medicines, orders }) {
   const outOfStockMedicines = medicines.filter(
     (medicine) => medicine.stock === 0,
   );
@@ -13,11 +13,73 @@ export default function AIInsights({ medicines }) {
     (medicine) => medicine.stock > 20,
   );
 
+  // Calculate recent demand for each medicine
+  const medicineDemand = medicines.map((medicine) => {
+    const medicineOrders = orders.filter(
+      (order) =>
+        order.medicineId === medicine.id && order.status !== "Cancelled",
+    );
+
+    const recentOrders = medicineOrders.filter((order) => {
+      const orderDate = new Date(order.date);
+      const today = new Date();
+
+      const differenceInTime = today - orderDate;
+      const differenceInDays = differenceInTime / (1000 * 60 * 60 * 24);
+
+      return differenceInDays <= 7;
+    });
+
+    const recentDemand = recentOrders.reduce(
+      (total, order) => total + order.quantity,
+      0,
+    );
+
+    return {
+      ...medicine,
+      recentDemand,
+    };
+  });
+
+  // Calculate daily demand rate
+  const demandInsights = medicineDemand
+    .filter((medicine) => medicine.recentDemand > 0 && medicine.stock > 0)
+    .map((medicine) => {
+      const dailyDemand = medicine.recentDemand / 7;
+
+      return {
+        ...medicine,
+        dailyDemand,
+      };
+    });
+
+  // Predict how many days the current stock will last
+  const predictedRisks = demandInsights
+    .map((medicine) => {
+      const daysOfStock = medicine.stock / medicine.dailyDemand;
+
+      return {
+        ...medicine,
+        daysOfStock,
+      };
+    })
+    .filter((medicine) => medicine.daysOfStock <= 30);
+
+  // Create demand-based recommendations
+  const demandRecommendations = predictedRisks.map((medicine) => ({
+    id: `demand-${medicine.id}`,
+    title: `Watch ${medicine.name}`,
+    message: `Based on recent demand, the current stock may last around ${Math.ceil(
+      medicine.daysOfStock,
+    )} days.`,
+  }));
+
+  // Existing stock recommendations
   const recommendations = [];
 
   outOfStockMedicines.forEach((medicine) => {
     recommendations.push({
-      id: medicine.id,
+      id: `out-${medicine.id}`,
       title: `Restock ${medicine.name}`,
       message: "This medicine is currently out of stock.",
     });
@@ -25,16 +87,20 @@ export default function AIInsights({ medicines }) {
 
   lowStockMedicines.forEach((medicine) => {
     recommendations.push({
-      id: medicine.id,
+      id: `low-${medicine.id}`,
       title: `Monitor ${medicine.name}`,
       message: `Only ${medicine.stock} units are remaining.`,
     });
   });
 
+  // Combine stock recommendations with demand recommendations
+  const allRecommendations = [...recommendations, ...demandRecommendations];
+
   return (
     <div className={classes.container}>
       <div className={classes.header}>
         <h2>AI Insights</h2>
+
         <p>
           Smart insights and recommendations based on your medicine inventory.
         </p>
@@ -102,13 +168,14 @@ export default function AIInsights({ medicines }) {
       <div className={classes.recommendationCard}>
         <h3>💡 Smart Recommendations</h3>
 
-        {recommendations.length > 0 ? (
-          recommendations.map((recommendation) => (
+        {allRecommendations.length > 0 ? (
+          allRecommendations.map((recommendation) => (
             <div key={recommendation.id} className={classes.recommendationItem}>
               <div className={classes.recommendationIcon}>💡</div>
 
               <div className={classes.recommendationContent}>
                 <strong>{recommendation.title}</strong>
+
                 <p>{recommendation.message}</p>
               </div>
             </div>
@@ -123,6 +190,7 @@ export default function AIInsights({ medicines }) {
         <div className={classes.healthHeader}>
           <div>
             <h3>📊 Inventory Health</h3>
+
             <p>Current overview of your medicine inventory</p>
           </div>
         </div>
